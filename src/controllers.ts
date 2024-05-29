@@ -1,9 +1,9 @@
 import { Context } from 'koa';
+import { Rag } from './rag';
+import platform from './platform';
 import { DefaultQuery, Models } from './constant';
 import { searchWithSogou } from './service';
-import platform from './platform';
 import { EBackend, IChatInputMessage, TMode } from './interface';
-import { Rag } from './rag';
 import { getFromCache, setToCache } from './cache';
 import { ESearXNGCategory } from './search/searxng';
 
@@ -93,7 +93,7 @@ export const chatStreamController = async (ctx: Context) => {
 };
 
 export const modelsController = async (ctx: Context) => {
-  const { GOOGLE_KEY, ALIYUN_KEY, OPENAI_KEY, BAIDU_KEY, TENCENT_KEY, YI_KEY, MOONSHOT_KEY, LEPTON_KEY, DEEPSEEK_KEY } = process.env;
+  const { GOOGLE_KEY, ALIYUN_KEY, OPENAI_KEY, BAIDU_KEY, TENCENT_KEY, YI_KEY, MOONSHOT_KEY, LEPTON_KEY, DEEPSEEK_KEY, GLM_KEY } = process.env;
   const keys: Record<string, string | undefined> = {
     google: GOOGLE_KEY,
     aliyun: ALIYUN_KEY,
@@ -103,6 +103,7 @@ export const modelsController = async (ctx: Context) => {
     yi: YI_KEY,
     moonshot: MOONSHOT_KEY,
     lepton: LEPTON_KEY,
+    chatglm: GLM_KEY,
     deepseek: DEEPSEEK_KEY
   };
   const models = Models.filter(item => keys[item.platform] !== undefined);
